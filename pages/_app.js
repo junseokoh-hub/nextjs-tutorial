@@ -1,7 +1,26 @@
-import '../styles/globals.css'
+import Navbar from "../components/NavBar";
 
-function MyApp({ Component, pageProps }) {
-  return <Component {...pageProps} />
+export default function App({ Component, pageProps }) {
+  return (
+    <>
+      <Navbar />
+      <Component {...pageProps} />
+      <style jsx global>
+        {`
+          * {
+            padding: 0;
+            margin: 0;
+            list-style: none;
+            box-sizing: border-box;
+          }
+          body {
+            background-color: teal;
+          }
+          a {
+            color: white;
+          }
+        `}
+      </style>
+    </>
+  );
 }
-
-export default MyApp
