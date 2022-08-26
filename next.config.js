@@ -17,6 +17,10 @@ const nextConfig = {
         source: "/api/products",
         destination: `https://fakestoreapi.com/products`,
       },
+      {
+        source: "/api/item/:id",
+        destination: `https://fakestoreapi.com/products/:id`,
+      },
     ];
   },
 };

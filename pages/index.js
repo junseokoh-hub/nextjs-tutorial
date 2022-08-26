@@ -1,15 +1,31 @@
+import Link from "next/link";
+import { useRouter } from "next/router";
 import Seo from "../components/Seo";
 
-function Home({ data }) {
+export default function Home({ data }) {
+  const router = useRouter();
+  const onClick = (id, title) => {
+    router.push(`/item/${title}/${id}`);
+  };
   return (
     <div className="container">
       <Seo title={"Home"} />
-      {data?.map((item) => (
-        <div key={item.id} className="content">
-          <img src={item.image} alt={item.description} />
-          <h4>{item.title}</h4>
-        </div>
-      ))}
+      {data?.map((item) => {
+        return (
+          <div
+            onClick={() => onClick(item.id, item.title)}
+            key={item.id}
+            className="content"
+          >
+            <img src={item.image} alt={item.description} />
+            <Link href={`/item/${item.title}/${item.id}`}>
+              <a>
+                <h4>{item.title}</h4>
+              </a>
+            </Link>
+          </div>
+        );
+      })}
       <style jsx>{`
         .container {
           display: grid;
@@ -46,5 +62,3 @@ export async function getServerSideProps() {
     },
   };
 }
-
-export default Home;

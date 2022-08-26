@@ -253,3 +253,17 @@ export async function getServerSideProps() {
   };
 }
 ```
+
+---
+
+## Dynamic Routes
+
+- 폴더명과 파일명으로 Routes를 만들어준다.
+- 폴더의 index.js는 각 폴더명의 url을 가리킨다.
+  - /movies <= movies > index.js
+  - /movies/12321 < = movies > `[id].js`
+  - useRouter 함수가 반환하는 객체 안의 query 키에서 발견 가능
+
+---
+
+[Course from nomadcoders / NextJS 시작하기](https://nomadcoders.co/nextjs-fundamentals)
