@@ -153,3 +153,103 @@ const router = useRouter();
       )
      }
      ```
+
+---
+
+## Patterns
+
+- Layout Component
+
+```
+import NavBar from "./NavBar";
+
+export default function Layout({ children }) {
+  return (
+    <>
+      <NavBar />
+      <div>{children}</div>
+    </>
+  );
+}
+```
+
+- title 적용
+  ```
+  import Head from "next/head"
+  ...
+  <Head>
+    <title>{타이틀 명}</title>
+  </Head>
+  ```
+
+---
+
+## Redirect & Rewrite
+
+- Redirect
+  - next.config.js 파일에서 경로를 설정 가능
+  - 파일 수정시 재실행
+  - 별표(\*)는 별표 이후의 경로를 catch하는 역할
+  - source로 들어가서 destination으로 나온다.
+
+```
+const nextConfig = {
+  ...
+  async redirects() {
+    return [
+      {
+        source: "/old-blog/:path*",
+        destination: "/new-sexy-blog/:path*",
+        permanent: false,
+      }
+    ]
+  }
+}
+```
+
+- Rewrite
+  - 유저를 redirect 시키지만 url은 변하지 않는다.
+  - URL 프록시 역할
+  - destination 경로를 masking 하여 변경사항을 알지 못하게 한다.
+
+```
+const nextConfig = {
+  ...
+  async rewrites() {
+    return [
+      {
+        soure: "/api/products",
+        destination: "https://fakestoreapi.com/products"
+      }
+    ]
+  },
+}
+```
+
+---
+
+## Server Side Rendering
+
+### **getServerSideProps()**
+
+- getServerSideProps()
+  - 이 함수에 들어있는 코드들은 client가 아니라 server 쪽에서 실행된다.
+  - api key를 적으면 절대로 보이지 않는다.
+- getServerSideProps 함수는 object를 반환
+- props라는 key 혹은 property를 가지고 그 안에 필요한 값을 넣는다.
+- absolute URL 즉, 완전한 URL 주소를 사용해야 한다.
+
+```
+export default function Home({data}) {
+  ...
+}
+
+export async function getServerSideProps() {
+  const data = await (await fetch(`http://localhost:3000/api/products`)).json();
+  return {
+    props: {
+      data,
+    },
+  };
+}
+```
